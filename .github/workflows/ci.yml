@@ -11,10 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # using stable Go version from go.mod
-        go-version: ['1.23']
+        go-version: ['1.22', '1.25.4']
     
-    steps:
+    steps:  
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -22,19 +21,20 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-          # enable dependency caching to speed up workflows
           cache: true
 
       - name: Run tests
         run: go test -v -race -coverprofile=coverage.out ./...
 
+      - name: Build example
+        run: go build -v -o /dev/null ./example/...
+
       - name: Run benchmarks
-        # only run benchmarks on the primary Go version to save CI time
-        if: matrix.go-version == '1.23'
+        if: matrix.go-version == '1.25.4'
         run: go test -bench=. -benchmem ./...
 
       - name: Upload coverage
-        if: matrix.go-version == '1.23'
+        if: matrix.go-version == '1.25.4'
         uses: codecov/codecov-action@v4
         with:
           file: ./coverage.out
@@ -49,7 +49,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: '1.25.4'
           cache: true
 
       - name: golangci-lint
