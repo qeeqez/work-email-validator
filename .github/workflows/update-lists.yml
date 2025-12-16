@@ -23,7 +23,7 @@ jobs:
 
       - name: Auto-commit changes
         # Only creates a commit if files matching the pattern changed
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: update domain lists"
           file_pattern: 'data/**'
