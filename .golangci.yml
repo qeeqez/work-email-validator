@@ -25,4 +25,4 @@ linters-settings:
   gofmt:
     simplify: true
   goimports:
-    local-prefixes: github.com/qeeqez/work-email-validator
+    # local-prefixes: github.com/qeeqez/work-email-validator
