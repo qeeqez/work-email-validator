@@ -1,47 +1,42 @@
 name: CI
 
+env:
+  GO_VERSION: '1.25'
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    strategy:
-      matrix:
-        go-version: ['1.25.4']
-    
-    steps:  
-      - name: Checkout code
+
+    steps:
+      - name: 🧰 Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Go
+      - name: ⬇️ Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Download dependencies
+      - name: ⬇️ Download dependencies
         run: go mod download
 
-      - name: Verify dependencies
+      - name: ⬇️ Verify dependencies
         run: go mod verify
 
-      - name: Run tests
+      - name: 🛠️ Build lib
+        run: go build -v ./...
+
+      - name: 🏃 Run tests
         run: go test -v -race -coverprofile=coverage.out -covermode=atomic -coverpkg=./... ./...
 
-      - name: Build example
-        run: go build -v -o /dev/null ./example/...
-
-      - name: Run benchmarks
-        if: matrix.go-version == '1.25.4'
-        run: go test -bench=. -benchmem ./...
-
-      - name: Check test coverage
-        if: matrix.go-version == '1.25.4'
+      - name: 📊 Check test coverage
         uses: vladopajic/go-test-coverage@v2
         with:
           config: ./.testcoverage.yml
@@ -58,15 +53,15 @@ jobs:
   gostatic:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 🧰 Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Go
+      - name: ⬇️ Setup Go
         uses: actions/setup-go@v6
         with:
-          go-version: '1.25.4'
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Run staticcheck
+      - name: 🏃 Run staticcheck
         uses: dominikh/staticcheck-action@v1.4.0
         with:
           version: "latest"
@@ -75,29 +70,29 @@ jobs:
   govet:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 🧰 Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Go
+      - name: ⬇️ Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: '1.25.4'
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Run go vet
+      - name: 🏃 Run go vet
         run: go vet ./...
 
   security:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 🧰 Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Go
+      - name: ⬇️ Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: '1.25.4'
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: Run Gosec Security Scanner
+      - name: 🏃 Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
           args: ./...
@@ -105,15 +100,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 🧰 Checkout code
         uses: actions/checkout@v6
 
-      - name: Setup Go
+      - name: ⬇️ Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: '1.25.4'
+          go-version: ${{ env.GO_VERSION }}
 
-      - name: golangci-lint
+      - name: 🏃 Run linter
         uses: golangci/golangci-lint-action@v9
-        with:
-          version: v1.62.2
