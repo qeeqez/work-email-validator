@@ -68,7 +68,13 @@ func IsDisposableOrFreeDomain(domain string) bool {
 
 // IsBusinessDomain checks if the given domain is neither disposable nor free,
 // indicating it's likely a business/corporate domain.
+// Returns false for empty or invalid domains.
 func IsBusinessDomain(domain string) bool {
+	domain = strings.TrimSpace(domain)
+	if domain == "" {
+		return false
+	}
+
 	return !IsDisposableOrFreeDomain(domain)
 }
 
