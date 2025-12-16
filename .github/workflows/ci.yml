@@ -23,8 +23,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
           # enable dependency caching to speed up workflows
-          cache: 'go'
-          cache-dependency-path: go.sum
+          cache: true
 
       - name: Run tests
         run: go test -v -race -coverprofile=coverage.out ./...
@@ -51,8 +50,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.25.4'
-          cache: 'go'
-          cache-dependency-path: go.sum
+          cache: true
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4
