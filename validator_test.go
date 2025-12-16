@@ -31,7 +31,7 @@ func runDomainTests(t *testing.T, tests []testCase, validatorFunc func(string) b
 }
 
 // Edge case tests for IsDisposableDomain.
-func TestIsDisposableDomain_Comprehensive(t *testing.T) {
+func TestIsDisposableDomain(t *testing.T) {
 	t.Parallel()
 
 	tests := []testCase{
@@ -86,7 +86,7 @@ func TestIsDisposableDomain_Comprehensive(t *testing.T) {
 }
 
 // Edge case tests for IsFreeDomain.
-func TestIsFreeDomain_Comprehensive(t *testing.T) {
+func TestIsFreeDomain(t *testing.T) {
 	t.Parallel()
 
 	tests := []testCase{
@@ -131,7 +131,7 @@ func TestIsFreeDomain_Comprehensive(t *testing.T) {
 }
 
 // Edge case tests for IsDisposableOrFreeDomain.
-func TestIsDisposableOrFreeDomain_Comprehensive(t *testing.T) {
+func TestIsDisposableOrFreeDomain(t *testing.T) {
 	t.Parallel()
 
 	tests := []testCase{
@@ -167,7 +167,7 @@ func TestIsDisposableOrFreeDomain_Comprehensive(t *testing.T) {
 }
 
 // Edge case tests for IsBusinessDomain.
-func TestIsBusinessDomain_Comprehensive(t *testing.T) {
+func TestIsBusinessDomain(t *testing.T) {
 	t.Parallel()
 
 	tests := []testCase{
@@ -185,10 +185,10 @@ func TestIsBusinessDomain_Comprehensive(t *testing.T) {
 		{"disposable_tempmail", "temp-mail.com", false},
 		{"disposable_guerrilla", "guerrillamail.com", false},
 
-		// Edge cases
+		// Edge cases - invalid domain syntax should return false
 		{"empty", "", false},
-		{"single_char", "x", true},
-		{"tld_only", ".com", true},
+		{"single_char", "x", false},
+		{"tld_only", ".com", false},
 
 		// Subdomains of business domains
 		{"business_subdomain", "api.mycompany.com", true},
@@ -207,7 +207,7 @@ func TestIsBusinessDomain_Comprehensive(t *testing.T) {
 }
 
 // Edge case tests for IsWorkEmail.
-func TestIsWorkEmail_Comprehensive(t *testing.T) {
+func TestIsWorkEmail(t *testing.T) {
 	t.Parallel()
 
 	tests := []testCase{
@@ -232,10 +232,10 @@ func TestIsWorkEmail_Comprehensive(t *testing.T) {
 		{"at_at_start", "@domain.com", false},
 		{"at_at_end", "user@", false},
 		// Multiple @ signs - domain extraction uses LastIndexByte
-		// "user@@domain.com" -> "domain.com" (business)
-		// "user@domain@com" -> "com" (business, as it's not in free/disposable lists)
+		// "user@@domain.com" -> "domain.com" (valid and business)
+		// "user@domain@com" -> "com" (invalid - TLD only, fails validation)
 		{"multiple_at", "user@@domain.com", true},
-		{"multiple_at_2", "user@domain@com", true},
+		{"multiple_at_2", "user@domain@com", false},
 
 		// Edge cases with @ symbol
 		{"just_domain", "domain.com", false},
@@ -262,8 +262,7 @@ func TestIsWorkEmail_Comprehensive(t *testing.T) {
 		{"subdomain_disposable", "user@x.temp-mail.com", false},
 
 		// Multiple @ signs - uses LastIndexByte, so extracts domain after last @
-		// Note: This is a design decision - the function validates domains, not full email format
-		// "user@host@company.com" extracts "company.com" which is a business domain
+		// "user@host@company.com" extracts "company.com" which is valid and business
 		{"email_with_at_in_local", "user@host@company.com", true},
 
 		// Very long emails
@@ -356,18 +355,23 @@ func TestFunctionConsistency(t *testing.T) {
 			}
 
 			// IsBusinessDomain should be opposite of IsDisposableOrFreeDomain
-			// except for empty/whitespace domains where both should be false
-			trimmed := strings.TrimSpace(domain)
-			if trimmed != "" {
+			// BUT only for VALID domains. Invalid domains (empty, invalid syntax) return false for both
+
+			// Check if domain would pass basic validation
+			normalized := strings.ToLower(strings.TrimSpace(domain))
+			isLikelyValid := len(normalized) >= 4 && strings.Contains(normalized, ".")
+
+			if isLikelyValid {
+				// For valid-looking domains, business should be opposite of disposable/free
 				if business == disposableOrFree {
-					t.Errorf("IsBusinessDomain(%q) = %v, but IsDisposableOrFreeDomain = %v (should be opposite)",
+					t.Errorf("IsBusinessDomain(%q) = %v, but IsDisposableOrFreeDomain = %v (should be opposite for valid domains)",
 						domain, business, disposableOrFree)
 				}
 			} else {
-				// Empty domains should return false for both
-				if business || disposableOrFree {
-					t.Errorf("Empty domain %q should return false for both checks, got business=%v, disposableOrFree=%v",
-						domain, business, disposableOrFree)
+				// For invalid domains, business should be false
+				// disposableOrFree can be false (if not in lists) or could theoretically be true (if matched)
+				if business {
+					t.Errorf("IsBusinessDomain(%q) = true, but domain appears invalid", domain)
 				}
 			}
 

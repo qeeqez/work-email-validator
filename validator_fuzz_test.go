@@ -140,17 +140,21 @@ func FuzzIsBusinessDomain(f *testing.F) {
 		business := workemailvalidator.IsBusinessDomain(domain)
 		disposableOrFree := workemailvalidator.IsDisposableOrFreeDomain(domain)
 
-		// Business domain should be opposite of disposable or free, except for empty domains
-		trimmed := strings.TrimSpace(domain)
-		if trimmed != "" {
+		// Business domain should be opposite of disposable or free, but only for VALID domains
+		// Invalid domains (empty, invalid syntax) should return false for business
+		normalized := strings.ToLower(strings.TrimSpace(domain))
+		isLikelyValid := len(normalized) >= 4 && strings.Contains(normalized, ".")
+
+		if isLikelyValid {
+			// For valid-looking domains, business should be opposite of disposableOrFree
 			if business == disposableOrFree {
-				t.Errorf("Inconsistency for %q: business=%v, disposableOrFree=%v (should be opposite)",
+				t.Errorf("Inconsistency for %q: business=%v, disposableOrFree=%v (should be opposite for valid domains)",
 					domain, business, disposableOrFree)
 			}
 		} else {
-			// Empty domains should return false for business
+			// For invalid domains, business should be false
 			if business {
-				t.Errorf("IsBusinessDomain returned true for empty domain %q", domain)
+				t.Errorf("IsBusinessDomain returned true for invalid domain %q", domain)
 			}
 		}
 
@@ -268,6 +272,8 @@ func FuzzIsWorkEmail(f *testing.F) {
 }
 
 // FuzzConsistency ensures all functions remain consistent with each other.
+//
+//nolint:cyclop
 func FuzzConsistency(f *testing.F) {
 	seeds := []string{
 		"gmail.com",
@@ -300,17 +306,19 @@ func FuzzConsistency(f *testing.F) {
 			t.Errorf("IsDisposableOrFreeDomain inconsistent for %q", domain)
 		}
 
-		// business should be opposite of disposableOrFree, except for empty/invalid domains
-		// where both can be false
-		trimmed := strings.TrimSpace(domain)
-		if trimmed != "" {
+		// business should be opposite of disposableOrFree, but only for valid domains
+		// Invalid domains return false for business regardless
+		normalized := strings.ToLower(strings.TrimSpace(domain))
+		isLikelyValid := len(normalized) >= 4 && strings.Contains(normalized, ".")
+
+		if isLikelyValid {
 			if business == disposableOrFree {
-				t.Errorf("IsBusinessDomain inconsistent for %q", domain)
+				t.Errorf("IsBusinessDomain inconsistent for valid domain %q", domain)
 			}
 		} else {
-			// Empty/whitespace domains should return false for business
+			// Invalid domains should return false for business
 			if business {
-				t.Errorf("IsBusinessDomain returned true for empty domain %q", domain)
+				t.Errorf("IsBusinessDomain returned true for invalid domain %q", domain)
 			}
 		}
 
