@@ -18,33 +18,33 @@ var (
 	freeDomains       = loadDomains(freeDomainsData)
 )
 
-func loadDomains(data string) map[string]bool {
-	domains := make(map[string]bool)
+func loadDomains(data string) map[string]struct{} {
+	domains := make(map[string]struct{})
 
-	for line := range strings.SplitSeq(data, "\n") {
+	for line := range strings.Lines(data) {
 		line = strings.TrimSpace(line)
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
 
-		domains[strings.ToLower(line)] = true
+		domains[strings.ToLower(line)] = struct{}{}
 	}
 
 	return domains
 }
 
-func normalizeDomain(domain string) string {
-	return strings.ToLower(strings.TrimSpace(domain))
-}
+func contains(domain string, domainMap map[string]struct{}) bool {
+	domain = strings.TrimSpace(strings.ToLower(domain))
 
-func isDomainOrParentInMap(domain string, domainMap map[string]bool) bool {
-	domain = normalizeDomain(domain)
+	if _, ok := domainMap[domain]; ok {
+		return true
+	}
 
-	parts := strings.Split(domain, ".")
-	for i := range len(parts) - 1 {
-		parent := strings.Join(parts[i:], ".")
-		if domainMap[parent] {
-			return true
+	for i := range len(domain) {
+		if domain[i] == '.' {
+			if _, ok := domainMap[domain[i+1:]]; ok {
+				return true
+			}
 		}
 	}
 
@@ -53,12 +53,12 @@ func isDomainOrParentInMap(domain string, domainMap map[string]bool) bool {
 
 // IsDisposableDomain checks if the given domain is a disposable/temporary email domain.
 func IsDisposableDomain(domain string) bool {
-	return isDomainOrParentInMap(domain, disposableDomains)
+	return contains(domain, disposableDomains)
 }
 
 // IsFreeDomain checks if the given domain is a free email provider domain.
 func IsFreeDomain(domain string) bool {
-	return isDomainOrParentInMap(domain, freeDomains)
+	return contains(domain, freeDomains)
 }
 
 // IsDisposableOrFreeDomain checks if the given domain is either disposable or free.
@@ -75,14 +75,13 @@ func IsBusinessDomain(domain string) bool {
 // IsWorkEmail checks if the given email address is from a business domain.
 // It returns true if the email is from a domain that is neither disposable nor free.
 func IsWorkEmail(email string) bool {
-	const expectedParts = 2
+	atIndex := strings.LastIndexByte(email, '@')
 
-	parts := strings.Split(email, "@")
-	if len(parts) != expectedParts {
+	if atIndex <= 0 || atIndex >= len(email)-1 {
 		return false
 	}
 
-	domain := parts[1]
+	domain := email[atIndex+1:]
 
 	return IsBusinessDomain(domain)
 }
