@@ -1,0 +1,35 @@
+name: Update Domain Lists
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-lists:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # persist the token so the auto-commit action can push
+          persist-credentials: true
+
+      - name: Update domain lists
+        run: |
+          chmod +x scripts/update-domains.sh
+          ./scripts/update-domains.sh
+
+      - name: Auto-commit changes
+        # Only creates a commit if files matching the pattern changed
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: chore: update domain lists
+          file_pattern: 'data/**'
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          branch: ${{ github.ref_name }}
