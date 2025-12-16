@@ -38,14 +38,24 @@ func normalizeDomain(domain string) string {
 	return strings.ToLower(strings.TrimSpace(domain))
 }
 
-func IsDisposableDomain(domain string) bool {
+func isDomainOrParentInMap(domain string, domainMap map[string]bool) bool {
 	domain = normalizeDomain(domain)
-	return disposableDomains[domain]
+	parts := strings.Split(domain, ".")
+	for i := 0; i < len(parts)-1; i++ {
+		parent := strings.Join(parts[i:], ".")
+		if domainMap[parent] {
+			return true
+		}
+	}
+	return false
+}
+
+func IsDisposableDomain(domain string) bool {
+	return isDomainOrParentInMap(domain, disposableDomains)
 }
 
 func IsFreeDomain(domain string) bool {
-	domain = normalizeDomain(domain)
-	return freeDomains[domain]
+	return isDomainOrParentInMap(domain, freeDomains)
 }
 
 func IsDisposableOrFreeDomain(domain string) bool {
@@ -54,4 +64,13 @@ func IsDisposableOrFreeDomain(domain string) bool {
 
 func IsBusinessDomain(domain string) bool {
 	return !IsDisposableOrFreeDomain(domain)
+}
+
+func IsWorkEmail(email string) bool {
+	parts := strings.Split(email, "@")
+	if len(parts) != 2 {
+		return false
+	}
+	domain := parts[1]
+	return IsBusinessDomain(domain)
 }
