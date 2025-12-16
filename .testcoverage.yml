@@ -6,3 +6,7 @@ threshold:
   package: 80
   
   total: 80
+
+exclude:
+  paths:
+    - example
