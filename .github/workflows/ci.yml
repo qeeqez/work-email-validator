@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # include the Go version from go.mod and a following minor to catch regressions
+        go-version: ['1.25.4', '1.26']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+          # enable dependency caching to speed up workflows
+          cache: 'go'
+          cache-dependency-path: go.sum
+
+      - name: Run tests
+        run: go test -v -race -coverprofile=coverage.out ./...
+
+      - name: Run benchmarks
+        # only run benchmarks on the primary Go version to save CI time
+        if: matrix.go-version == '1.25.4'
+        run: go test -bench=. -benchmem ./...
+
+      - name: Upload coverage
+        if: matrix.go-version == '1.25.4'
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.out
+          fail_ci_if_error: false
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.4'
+          cache: 'go'
+          cache-dependency-path: go.sum
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
