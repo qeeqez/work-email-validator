@@ -33,9 +33,11 @@ func loadDomains(data string) map[string]struct{} {
 	return domains
 }
 
-// normalize prepares the domain for lookup: trims spaces and converts to lowercase.
+// normalize prepares the domain for lookup: trims spaces, converts to ASCII (for IDN), and lowercases.
 func normalize(domain string) string {
-	return strings.ToLower(strings.TrimSpace(domain))
+	domain = strings.TrimSpace(domain)
+	domain = domainToASCII(domain)
+	return strings.ToLower(domain)
 }
 
 // contains checks if the domain or any of its parents exist in the map.
