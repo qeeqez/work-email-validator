@@ -3,9 +3,13 @@ run:
   modules-download-mode: readonly
 linters:
   default: all
+  disable:
+    - wsl
+    - depguard
+    - gochecknoglobals
   exclusions:
     paths:
-      - examples*
+      - example*
 formatters:
   enable:
     - gofmt
@@ -16,5 +20,5 @@ formatters:
         - github.com/qeeqez/work-email-validator
   exclusions:
     paths:
-      - examples*
+      - example*
 

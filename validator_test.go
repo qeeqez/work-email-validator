@@ -1,8 +1,14 @@
-package workemailvalidator
+package workemailvalidator_test
 
-import "testing"
+import (
+	"testing"
+
+	workemailvalidator "github.com/qeeqez/work-email-validator"
+)
 
 func TestIsDisposableDomain(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		domain   string
 		expected bool
@@ -16,17 +22,21 @@ func TestIsDisposableDomain(t *testing.T) {
 		{"  temp-mail.org  ", true},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.domain, func(t *testing.T) {
-			result := IsDisposableDomain(tt.domain)
-			if result != tt.expected {
-				t.Errorf("IsDisposableDomain(%q) = %v, want %v", tt.domain, result, tt.expected)
+	for _, testCase := range tests {
+		t.Run(testCase.domain, func(t *testing.T) {
+			t.Parallel()
+
+			result := workemailvalidator.IsDisposableDomain(testCase.domain)
+			if result != testCase.expected {
+				t.Errorf("IsDisposableDomain(%q) = %v, want %v", testCase.domain, result, testCase.expected)
 			}
 		})
 	}
 }
 
 func TestIsFreeDomain(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		domain   string
 		expected bool
@@ -43,17 +53,21 @@ func TestIsFreeDomain(t *testing.T) {
 		{"  outlook.com  ", true},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.domain, func(t *testing.T) {
-			result := IsFreeDomain(tt.domain)
-			if result != tt.expected {
-				t.Errorf("IsFreeDomain(%q) = %v, want %v", tt.domain, result, tt.expected)
+	for _, testCase := range tests {
+		t.Run(testCase.domain, func(t *testing.T) {
+			t.Parallel()
+
+			result := workemailvalidator.IsFreeDomain(testCase.domain)
+			if result != testCase.expected {
+				t.Errorf("IsFreeDomain(%q) = %v, want %v", testCase.domain, result, testCase.expected)
 			}
 		})
 	}
 }
 
 func TestIsDisposableOrFreeDomain(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		domain   string
 		expected bool
@@ -64,17 +78,21 @@ func TestIsDisposableOrFreeDomain(t *testing.T) {
 		{"mycompany.com", false},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.domain, func(t *testing.T) {
-			result := IsDisposableOrFreeDomain(tt.domain)
-			if result != tt.expected {
-				t.Errorf("IsDisposableOrFreeDomain(%q) = %v, want %v", tt.domain, result, tt.expected)
+	for _, testCase := range tests {
+		t.Run(testCase.domain, func(t *testing.T) {
+			t.Parallel()
+
+			result := workemailvalidator.IsDisposableOrFreeDomain(testCase.domain)
+			if result != testCase.expected {
+				t.Errorf("IsDisposableOrFreeDomain(%q) = %v, want %v", testCase.domain, result, testCase.expected)
 			}
 		})
 	}
 }
 
 func TestIsBusinessDomain(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		domain   string
 		expected bool
@@ -86,32 +104,13 @@ func TestIsBusinessDomain(t *testing.T) {
 		{"outlook.com", false},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.domain, func(t *testing.T) {
-			result := IsBusinessDomain(tt.domain)
-			if result != tt.expected {
-				t.Errorf("IsBusinessDomain(%q) = %v, want %v", tt.domain, result, tt.expected)
-			}
-		})
-	}
-}
+	for _, testCase := range tests {
+		t.Run(testCase.domain, func(t *testing.T) {
+			t.Parallel()
 
-func TestNormalizeDomain(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{"GMAIL.COM", "gmail.com"},
-		{"  outlook.com  ", "outlook.com"},
-		{"Yahoo.Com", "yahoo.com"},
-		{"example.com", "example.com"},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.input, func(t *testing.T) {
-			result := normalizeDomain(tt.input)
-			if result != tt.expected {
-				t.Errorf("normalizeDomain(%q) = %q, want %q", tt.input, result, tt.expected)
+			result := workemailvalidator.IsBusinessDomain(testCase.domain)
+			if result != testCase.expected {
+				t.Errorf("IsBusinessDomain(%q) = %v, want %v", testCase.domain, result, testCase.expected)
 			}
 		})
 	}

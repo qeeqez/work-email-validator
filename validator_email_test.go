@@ -1,8 +1,14 @@
-package workemailvalidator
+package workemailvalidator_test
 
-import "testing"
+import (
+	"testing"
+
+	workemailvalidator "github.com/qeeqez/work-email-validator"
+)
 
 func TestIsWorkEmail(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		email    string
 		expected bool
@@ -18,11 +24,13 @@ func TestIsWorkEmail(t *testing.T) {
 		{"user@corp.google.com", true}, // google.com is not in free list
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.email, func(t *testing.T) {
-			result := IsWorkEmail(tt.email)
-			if result != tt.expected {
-				t.Errorf("IsWorkEmail(%q) = %v, want %v", tt.email, result, tt.expected)
+	for _, testCase := range tests {
+		t.Run(testCase.email, func(t *testing.T) {
+			t.Parallel()
+
+			result := workemailvalidator.IsWorkEmail(testCase.email)
+			if result != testCase.expected {
+				t.Errorf("IsWorkEmail(%q) = %v, want %v", testCase.email, result, testCase.expected)
 			}
 		})
 	}
