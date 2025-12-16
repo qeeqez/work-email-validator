@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # include the Go version from go.mod and a following minor to catch regressions
-        go-version: ['1.25.4', '1.26']
+        # using stable Go version from go.mod
+        go-version: ['1.25.4']
     
     steps:
       - name: Checkout code
