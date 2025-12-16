@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          # persist the token so the auto-commit action can push
-          persist-credentials: true
 
       - name: Update domain lists
         run: |
