@@ -1,17 +1,26 @@
 version: 2
 
 builds:
-  - env:
+  - id: non-windows
+    env:
       - CGO_ENABLED=0
     main: ./example
+    binary: work-email-validator
     goos:
       - linux
-      - windows
       - darwin
 
+  - id: windows
+    env:
+      - CGO_ENABLED=0
+    main: ./example
+    binary: work-email-validator
+    goos:
+      - windows
+
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of uname.
+  - id: default
+    format: tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -19,10 +28,20 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
-    format_overrides:
-    - goos: windows
-      format: zip
+    builds:
+      - non-windows
+
+  - id: windows
+    format: zip
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    builds:
+      - windows
 
 checksum:
   name_template: 'checksums.txt'
