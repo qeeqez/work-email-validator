@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         # using stable Go version from go.mod
-        go-version: ['1.25.4']
+        go-version: ['1.23']
     
     steps:
       - name: Checkout code
@@ -30,11 +30,11 @@ jobs:
 
       - name: Run benchmarks
         # only run benchmarks on the primary Go version to save CI time
-        if: matrix.go-version == '1.25.4'
+        if: matrix.go-version == '1.23'
         run: go test -bench=. -benchmem ./...
 
       - name: Upload coverage
-        if: matrix.go-version == '1.25.4'
+        if: matrix.go-version == '1.23'
         uses: codecov/codecov-action@v4
         with:
           file: ./coverage.out
@@ -49,10 +49,10 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25.4'
+          go-version: '1.23'
           cache: true
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4
         with:
-          version: latest
+          version: v1.62.2
