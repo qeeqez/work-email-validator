@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	validator "github.com/qeeqez/work-email-validator"
 	"strings"
+
+	validator "github.com/qeeqez/work-email-validator"
 )
 
 func main() {
