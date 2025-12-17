@@ -189,6 +189,7 @@ func TestIsBusinessDomain(t *testing.T) {
 		{"empty", "", false},
 		{"single_char", "x", false},
 		{"tld_only", ".com", false},
+		{"single_char_tld", "domain.a", false}, // TLD must be at least 2 chars
 
 		// Subdomains of business domains
 		{"business_subdomain", "api.mycompany.com", true},
