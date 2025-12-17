@@ -1,0 +1,32 @@
+*                 text=auto
+
+docs-internal     linguist-generated=true
+docs-public       linguist-generated=true
+db/sqlc           linguist-generated=true
+
+# GoLang prefers LF line endings
+*.go              text eol=lf
+go.mod            text eol=lf
+go.sum            text eol=lf
+
+*.bash            text eol=lf
+*.bat             text eol=crlf
+*.cmd             text eol=crlf
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.class           binary
+*.dll             binary
+*.ear             binary
+*.jar             binary
+*.so              binary
+*.war             binary
+
+# Archives
+*.7z              binary
+*.gz              binary
+*.jar             binary
+*.rar             binary
+*.tar             binary
+*.zip             binary
+*.zip             binary
