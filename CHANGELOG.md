@@ -1,0 +1,30 @@
+# Changelog
+
+## 1.0.0 (2025-12-17)
+
+
+### Features
+
+* add .testcoverage.yml for coverage report config. ([374e565](https://github.com/qeeqez/work-email-validator/commit/374e56523c546b7fc128a503f808edfc8e4805f9))
+* add dependabot configuration for GitHub Actions and Go modules ([bb7c814](https://github.com/qeeqez/work-email-validator/commit/bb7c814c82009015a83fcc5094a2337848ca8113))
+* add exclusion for 'example' path in coverage thresholds ([410a05a](https://github.com/qeeqez/work-email-validator/commit/410a05a5ce55a7a2745969fa14ed3735abd42c80))
+* add initial .goreleaser.yaml configuration for builds and archives ([7ac6f17](https://github.com/qeeqez/work-email-validator/commit/7ac6f1764b467badce1fb2a6053a7453580af2bf))
+* add release workflow for automated version and tag ([7081ea6](https://github.com/qeeqez/work-email-validator/commit/7081ea648372f1e61ef3dbcf7e8981ec954e02c9))
+* business domains should be validated first ([9f80c51](https://github.com/qeeqez/work-email-validator/commit/9f80c513dddc9e89eb67439c330c2685caf5598c))
+* improve domain loading and handling ([bfcc972](https://github.com/qeeqez/work-email-validator/commit/bfcc97264b5e5cfa0c0b198bd32ae3a84a1ce0a3))
+* improve update list script ([3e95e21](https://github.com/qeeqez/work-email-validator/commit/3e95e211e1c0900b9b6dffb17e208cc9cd659886))
+* support internationalized domains ([6bac838](https://github.com/qeeqez/work-email-validator/commit/6bac838c6125837fb941546a5dcd298427271a0a))
+
+
+### Bug Fixes
+
+* all linting errors ([2e15003](https://github.com/qeeqez/work-email-validator/commit/2e150039a042e3f32bc314590bde25c4b0f97e6e))
+* **ci:** change cache parameter to boolean value ([2733aad](https://github.com/qeeqez/work-email-validator/commit/2733aad301de01c650ccc89b49becdb1d62c6dcd))
+* **ci:** downgrade to Go 1.23 for golangci-lint compatibility ([e5a47e9](https://github.com/qeeqez/work-email-validator/commit/e5a47e968d8eba3289894160cf0519296a77a1b7))
+* **ci:** update CI config  for Go version compatibility and improve coverage reporting ([727560d](https://github.com/qeeqez/work-email-validator/commit/727560deb4272ad7c7bbea6d327a4dfe32b79e5a))
+* **ci:** use only Go 1.25.4 to avoid version availability issues ([718dc3b](https://github.com/qeeqez/work-email-validator/commit/718dc3b75675450d1264462d6625e6edc59df286))
+* goreleaser.yaml for build config. and archive formats ([b28f17d](https://github.com/qeeqez/work-email-validator/commit/b28f17d62b413af5c9e5b9164f235d6f26372cf2))
+* migrate to golangci-lint v2 and apply proper rules ([880bd5b](https://github.com/qeeqez/work-email-validator/commit/880bd5b184ef53695e5187a2663cee6da4f428d6))
+* proper permissions ([3447df8](https://github.com/qeeqez/work-email-validator/commit/3447df8b7cc5c0b8db8f8e9332fc4eb64cb68058))
+* set main package path for goreleaser ([2302268](https://github.com/qeeqez/work-email-validator/commit/2302268c56bbdc106d3142edde0f539db48c2dc9))
+* **validator:** handle subdomains correctly and add IsWorkEmail helper ([bf0c0f0](https://github.com/qeeqez/work-email-validator/commit/bf0c0f08719083e4e207153acf9c9f2630c96a1f))
