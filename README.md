@@ -2,7 +2,7 @@
 
 A lightweight Go library to verify if an email domain is disposable, free, or business-oriented.
 
-[![Build Status](https://github.com/qeeqez/work-email-validator/workflows/CI/badge.svg)](https://github.com/qeeqez/work-email-validator/actions)
+[![Test](https://github.com/qeeqez/work-email-validator/actions/workflows/test.yml/badge.svg)](https://github.com/qeeqez/work-email-validator/actions/workflows/test.yml)
 [![Coverage Status](https://codecov.io/gh/qeeqez/work-email-validator/graph/badge.svg)](https://codecov.io/gh/qeeqez/work-email-validator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/qeeqez/work-email-validator)](https://goreportcard.com/report/github.com/qeeqez/work-email-validator)
 [![GoDoc](https://godoc.org/github.com/qeeqez/work-email-validator?status.svg)](https://godoc.org/github.com/qeeqez/work-email-validator)
