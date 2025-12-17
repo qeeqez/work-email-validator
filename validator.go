@@ -3,7 +3,6 @@
 package workemailvalidator
 
 import (
-	_ "embed"
 	"strings"
 )
 
@@ -11,6 +10,7 @@ import (
 func normalize(domain string) string {
 	domain = strings.TrimSpace(domain)
 	domain = domainToASCII(domain)
+
 	return strings.ToLower(domain)
 }
 

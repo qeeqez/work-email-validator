@@ -1,0 +1,71 @@
+{
+  "disposable_sources": [
+    {
+      "name": "Disposable Email Domains - Primary",
+      "url": "https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/main/disposable_email_blocklist.conf"
+    },
+    {
+      "name": "Disposable Domains - Community",
+      "url": "https://raw.githubusercontent.com/disposable/disposable-email-domains/master/domains_strict.txt"
+    },
+    {
+      "name": "TheDahoom Disposable",
+      "url": "https://raw.githubusercontent.com/TheDahoom/disposable-email/main/blacklist.txt"
+    },
+    {
+      "name": "Sanitizer Service",
+      "url": "https://raw.githubusercontent.com/eser/sanitizer-svc/main/disposable_email_blocklist.conf"
+    },
+    {
+      "name": "EmailOnDeck Collection",
+      "url": "https://raw.githubusercontent.com/GeroldSetz/emailondeck.com-domains/master/emailondeck.com_domains_from_bdea.cc.txt"
+    },
+    {
+      "name": "Groundcat List",
+      "url": "https://raw.githubusercontent.com/groundcat/disposable-email-domain-list/master/domains.txt"
+    },
+    {
+      "name": "Jesper Nissen List",
+      "url": "https://raw.githubusercontent.com/jespernissen/disposable-maildomain-list/master/disposable-maildomain-list.txt"
+    },
+    {
+      "name": "KSLR Database",
+      "url": "https://raw.githubusercontent.com/kslr/disposable-email-domains/master/list.txt"
+    },
+    {
+      "name": "MattKetmo EmailChecker",
+      "url": "https://raw.githubusercontent.com/MattKetmo/EmailChecker/master/res/throwaway_domains.txt"
+    },
+    {
+      "name": "Unknown Collection",
+      "url": "https://raw.githubusercontent.com/unkn0w/disposable-email-domain-list/main/domains.txt"
+    },
+    {
+      "name": "FakeFilter",
+      "url": "https://raw.githubusercontent.com/7c/fakefilter/main/txt/data.txt"
+    },
+    {
+      "name": "Wes Bos Burner",
+      "url": "https://raw.githubusercontent.com/wesbos/burner-email-providers/master/emails.txt"
+    },
+    {
+      "name": "FGRibreau MailChecker",
+      "url": "https://raw.githubusercontent.com/FGRibreau/mailchecker/master/list.txt"
+    },
+    {
+      "name": "Sublime Security",
+      "url": "https://raw.githubusercontent.com/sublime-security/static-files/master/disposable_email_providers.txt"
+    }
+  ],
+  "free_source": {
+    "name": "Freemail Providers",
+    "url": "https://raw.githubusercontent.com/willwhite/freemail/master/data/free.txt"
+  },
+  "exclude_domains": [
+    "example.com",
+    "example.net",
+    "example.org",
+    "localhost",
+    "test.com"
+  ]
+}

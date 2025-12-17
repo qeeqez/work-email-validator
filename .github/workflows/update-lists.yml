@@ -2,7 +2,7 @@ name: Update Domain Lists
 
 on:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC
   workflow_dispatch:
 
 permissions:
@@ -16,13 +16,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
       - name: Update domain lists
-        run: |
-          chmod +x scripts/update-domains.sh
-          ./scripts/update-domains.sh
+        run: bun scripts/update-domains.ts
 
       - name: Auto-commit changes
-        # Only creates a commit if files matching the pattern changed
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: update domain lists"
