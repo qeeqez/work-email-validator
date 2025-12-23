@@ -25,7 +25,7 @@ jobs:
       - name: Auto-commit changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "chore: update domain lists"
+          commit_message: "fix: update domain lists"
           file_pattern: 'data/**'
           commit_user_name: github-actions[bot]
           commit_user_email: github-actions[bot]@users.noreply.github.com
