@@ -28,3 +28,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: "go"
+          skip-github-pull-request: true
