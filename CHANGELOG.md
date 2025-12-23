@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/qeeqez/work-email-validator/compare/v1.0.1...v1.0.2) (2025-12-23)
+
+
+### Bug Fixes
+
+* its not an automatic release ([680d1b5](https://github.com/qeeqez/work-email-validator/commit/680d1b5ae16c6a91c4656c1258a010d1ae950dad))
+* make patch releases on list updates ([71ab3ff](https://github.com/qeeqez/work-email-validator/commit/71ab3ffb5353fb08e9db00c45966b3b3862aaea2))
+
 ## [1.0.1](https://github.com/qeeqez/work-email-validator/compare/v1.0.0...v1.0.1) (2025-12-17)
 
 
