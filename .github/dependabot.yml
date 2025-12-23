@@ -3,10 +3,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
-      interval: "weekly"
-    assignees:
-      - "theqeeqez"
-      - "thebravebyte"
+      interval: "weekly"   
     groups:
       dependencies:
         patterns:
@@ -15,10 +12,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-    assignees:
-      - "theqeeqez"
-      - "thebravebyte"
+      interval: "weekly"    
     groups:
       dependencies:
         patterns:
