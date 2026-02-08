@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/qeeqez/work-email-validator/compare/v1.0.7...v1.0.8) (2026-02-08)
+
+
+### Bug Fixes
+
+* update domain lists ([92f78e3](https://github.com/qeeqez/work-email-validator/commit/92f78e3a216fdc4bf821b45df293972dcf10fdd1))
+
 ## [1.0.7](https://github.com/qeeqez/work-email-validator/compare/v1.0.6...v1.0.7) (2026-02-01)
 
 
