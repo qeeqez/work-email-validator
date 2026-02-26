@@ -1,25 +1,14 @@
 version: "2"
-run:
-  modules-download-mode: readonly
 linters:
   default: all
   disable:
-    - wsl
+    - cyclop # duplicate of gocyclo
     - depguard
     - gochecknoglobals
     - nlreturn
+    - rowserrcheck # not relevant (SQL)
+    - sqlclosecheck # not relevant (SQL)
+    - wsl # Deprecated
   exclusions:
     paths:
       - example*
-formatters:
-  enable:
-    - gofmt
-    - goimports
-  settings:
-    goimports:
-      local-prefixes:
-        - github.com/qeeqez/work-email-validator
-  exclusions:
-    paths:
-      - example*
-
