@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	validator "github.com/qeeqez/work-email-validator"
+	validator "github.com/rixlhq/work-email-validator"
 )
 
 func main() {

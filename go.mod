@@ -1,4 +1,4 @@
-module github.com/qeeqez/work-email-validator
+module github.com/rixlhq/work-email-validator
 
 go 1.25.0
 

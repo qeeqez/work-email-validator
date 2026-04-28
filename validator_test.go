@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	workemailvalidator "github.com/qeeqez/work-email-validator"
+	workemailvalidator "github.com/rixlhq/work-email-validator"
 )
 
 // testCase represents a generic test case for domain/email validation.

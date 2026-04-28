@@ -33,7 +33,7 @@ jobs:
           flags: unittests
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: qeeqez/work-email-validator
+          slug: rixlhq/work-email-validator
 
   release:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

@@ -2,10 +2,10 @@
 
 A lightweight Go library to verify if an email domain is disposable, free, or business-oriented.
 
-[![Test](https://github.com/qeeqez/work-email-validator/actions/workflows/test.yml/badge.svg)](https://github.com/qeeqez/work-email-validator/actions/workflows/test.yml)
-[![Coverage Status](https://codecov.io/gh/qeeqez/work-email-validator/graph/badge.svg)](https://codecov.io/gh/qeeqez/work-email-validator)
-[![Go Report Card](https://goreportcard.com/badge/github.com/qeeqez/work-email-validator)](https://goreportcard.com/report/github.com/qeeqez/work-email-validator)
-[![GoDoc](https://godoc.org/github.com/qeeqez/work-email-validator?status.svg)](https://godoc.org/github.com/qeeqez/work-email-validator)
+[![Test](https://github.com/rixlhq/work-email-validator/actions/workflows/test.yml/badge.svg)](https://github.com/rixlhq/work-email-validator/actions/workflows/test.yml)
+[![Coverage Status](https://codecov.io/gh/rixlhq/work-email-validator/graph/badge.svg)](https://codecov.io/gh/rixlhq/work-email-validator)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rixlhq/work-email-validator)](https://goreportcard.com/report/github.com/rixlhq/work-email-validator)
+[![GoDoc](https://godoc.org/github.com/rixlhq/work-email-validator?status.svg)](https://godoc.org/github.com/rixlhq/work-email-validator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
@@ -21,7 +21,7 @@ A lightweight Go library to verify if an email domain is disposable, free, or bu
 ## Installation
 
 ```bash
-go get github.com/qeeqez/work-email-validator
+go get github.com/rixlhq/work-email-validator
 ```
 
 ## Usage
@@ -31,7 +31,8 @@ package main
 
 import (
 	"fmt"
-	validator "github.com/qeeqez/work-email-validator"
+
+	validator "github.com/rixlhq/work-email-validator"
 )
 
 func main() {
@@ -176,4 +177,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Related Projects
 
-- [snowid](https://github.com/qeeqez/snowid) - Distributed unique ID generator
+- [snowid](https://github.com/rixlhq/snowid) - Distributed unique ID generator
